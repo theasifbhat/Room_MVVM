@@ -9,17 +9,30 @@ import androidx.recyclerview.widget.RecyclerView
 import com.skunkworks.roomtake2.R
 import com.skunkworks.roomtake2.db.Note
 
-class NoteListAdapter internal constructor(
-    context: Context
+class NoteListAdapter (
+    context: Context,
+    val onNoteClick: OnNoteClick
 ) : RecyclerView.Adapter<NoteListAdapter.WordViewHolder>() {
 
     private val inflater: LayoutInflater = LayoutInflater.from(context)
     private var note = emptyList<Note>()
 
-    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    inner class WordViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView),View.OnClickListener {
         val wordItemView: TextView = itemView.findViewById(R.id.title)
         val wordItemView2: TextView = itemView.findViewById(R.id.note)
 
+        init {
+            itemView.setOnClickListener(this)
+        }
+
+        override fun onClick(p0: View?) {
+            onNoteClick.onNoteClicked(note[adapterPosition])
+        }
+
+    }
+
+    interface OnNoteClick{
+        fun onNoteClicked(note: Note)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {

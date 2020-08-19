@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.TextUtils
 import android.widget.Button
+import com.google.android.material.snackbar.Snackbar
 import com.skunkworks.roomtake2.R
 import com.skunkworks.roomtake2.db.Note
 import kotlinx.android.synthetic.main.activity_new_note.*
@@ -17,8 +18,8 @@ class NewNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_new_note)
 
 
-        val button = findViewById<Button>(R.id.button_save)
-        button.setOnClickListener {
+
+        button_save.setOnClickListener {
             val replyIntent = Intent()
             if (TextUtils.isEmpty(edit_note.text) || TextUtils.isEmpty(edit_title.text)) {
                 setResult(Activity.RESULT_CANCELED, replyIntent)
@@ -28,6 +29,7 @@ class NewNoteActivity : AppCompatActivity() {
                 val notea = Note(title,note)
                 replyIntent.putExtra(EXTRA_REPLY, notea)
                 setResult(Activity.RESULT_OK, replyIntent)
+                Snackbar.make(mainayout,"Note Added Successfully!",1213).show()
             }
             finish()
         }

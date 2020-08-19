@@ -10,5 +10,9 @@ class NoteRepository(private val dao: NoteDao){
      dao.addNote(note)
  }
 
+ suspend fun deleteNote(note: Note){
+     dao.deleteNote(note)
+ }
+
 
 }

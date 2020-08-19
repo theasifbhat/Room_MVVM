@@ -1,21 +1,21 @@
 package com.skunkworks.roomtake2.db
 
 import androidx.lifecycle.LiveData
-import androidx.room.Dao
-import androidx.room.Insert
-import androidx.room.OnConflictStrategy
-import androidx.room.Query
+import androidx.room.*
 
 @Dao
 interface NoteDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-   suspend fun addNote(note: Note)
+    suspend fun addNote(note: Note)
 
     @Query("Select * from note")
-    fun getAllNotes():LiveData<List<Note>>
+    fun getAllNotes(): LiveData<List<Note>>
 
     @Insert
-   suspend fun addMultipleNotes(vararg note: Note)
+    suspend fun addMultipleNotes(vararg note: Note)
+
+    @Delete
+    suspend fun deleteNote(note: Note)
 
 }

@@ -4,17 +4,19 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.StaggeredGridLayoutManager
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.skunkworks.roomtake2.R
 import com.skunkworks.roomtake2.db.Note
 import kotlinx.android.synthetic.main.activity_main.*
 
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(),NoteListAdapter.OnNoteClick {
     private lateinit var wordViewModel: NoteViewModel
     private val newWordActivityRequestCode = 1
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +24,7 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
         wordViewModel = ViewModelProvider(this).get(NoteViewModel::class.java)
         val recyclerView = findViewById<RecyclerView>(R.id.recyclerview)
-        val adapter = NoteListAdapter(this)
+        val adapter = NoteListAdapter(this,this)
         recyclerView.adapter = adapter
         recyclerView.layoutManager = StaggeredGridLayoutManager(2,LinearLayoutManager.VERTICAL)
         wordViewModel.allWords.observe(this, Observer { words ->
@@ -51,5 +53,18 @@ class MainActivity : AppCompatActivity() {
                 R.string.empty_not_saved,
                 Toast.LENGTH_LONG).show()
         }
+    }
+
+    override fun onNoteClicked(note: Note) {
+        MaterialAlertDialogBuilder(NewOrders@this)
+            .setTitle("Confirm Action")
+            .setMessage("Do you want to delete this note ?")
+            .setPositiveButton("Yeah"){
+                    _,_->
+
+              wordViewModel.deleteNote(note)
+                
+            }.show()
+
     }
 }
