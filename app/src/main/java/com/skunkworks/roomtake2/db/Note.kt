@@ -1,6 +1,5 @@
 package com.skunkworks.roomtake2.db
 
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
@@ -12,7 +11,7 @@ data class Note(
     val title: String,
     val note: String
 
-):Serializable {
+) : Serializable {
     @PrimaryKey(autoGenerate = true)
-    var id:Int=0
+    var id: Int = 0
 }
