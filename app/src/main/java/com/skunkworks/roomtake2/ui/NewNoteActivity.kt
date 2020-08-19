@@ -29,7 +29,6 @@ class NewNoteActivity : AppCompatActivity() {
                 val notea = Note(title,note)
                 replyIntent.putExtra(EXTRA_REPLY, notea)
                 setResult(Activity.RESULT_OK, replyIntent)
-                Snackbar.make(mainayout,"Note Added Successfully!",1213).show()
             }
             finish()
         }
